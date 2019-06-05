@@ -13,7 +13,7 @@ class Valkyrie {
     val renderer = Pixi.autoDetectRenderer(canvas.clientWidth, canvas.clientHeight, RendererOptions(canvas))
 
     val graphics = new PIXI.Graphics()
-    graphics.beginFill(0xFF3300).lineStyle(10, 0xffd900, 1)
+    graphics.beginFill(0xFF3300).lineStyle(1, 0xffd900, 1)
     graphics.endFill()
 
     var down = false
