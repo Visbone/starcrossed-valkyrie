@@ -1,3 +1,5 @@
+import facades.vortex.{VORTEX}
+
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import org.scalajs.dom
 import org.scalajs.dom.html
@@ -19,23 +21,26 @@ class Valkyrie {
     val graphics = new PIXI.Graphics()
     graphics.beginFill(0xFF3300).lineStyle(1, 0xffffff, 1)
     graphics.endFill()
-/*
+
     var Client = new VORTEX.Client("vortexserver.glitch.me");
 
-    Client.on('connect', ()=>{
+    Client.on("connect", ()=>{
 
       println("connected");
-
-      Client.on('message', ()=>{
-        println(data);
+      Client.on("message", (obj:js.Object)=>{
+        println(JSON.stringify(obj));
       });
 
-      Client.on('close', ()=>{
+      Client.on("close", ()=>{
         println("unconnected :(");
       });
 
-    });
-*/
+    }
+
+    );
+
+
+
 
 
 
