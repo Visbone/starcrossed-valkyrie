@@ -4,17 +4,40 @@ import org.scalajs.dom.html
 import pixiscalajs.PIXI
 import pixiscalajs.PIXI.{Pixi, RendererOptions}
 
+import scala.scalajs.js
+import scala.scalajs.js.JSON
+
+
+
 @JSExportTopLevel("Valkyrie")
 class Valkyrie {
-
   @JSExport
   def Client(canvas: html.Canvas): Unit = {
     println("Hello, World")
     val renderer = Pixi.autoDetectRenderer(canvas.clientWidth, canvas.clientHeight, RendererOptions(canvas))
 
     val graphics = new PIXI.Graphics()
-    graphics.beginFill(0xFF3300).lineStyle(1, 0xffd900, 1)
+    graphics.beginFill(0xFF3300).lineStyle(1, 0xffffff, 1)
     graphics.endFill()
+/*
+    var Client = new VORTEX.Client("vortexserver.glitch.me");
+
+    Client.on('connect', ()=>{
+
+      println("connected");
+
+      Client.on('message', ()=>{
+        println(data);
+      });
+
+      Client.on('close', ()=>{
+        println("unconnected :(");
+      });
+
+    });
+*/
+
+
 
     var down = false
     canvas.onmousedown = (e: dom.MouseEvent) => {
