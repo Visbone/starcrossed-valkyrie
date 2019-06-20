@@ -3,8 +3,8 @@ package js
 import facades.vortex.{CANVAS, VORTEX}
 import org.scalajs.dom
 import pixiscalajs.PIXI
-import pixiscalajs.PIXI.{Pixi, RendererOptions}
-import pixiscalajs.extensions.{DefineLoop,Keyboard}
+import pixiscalajs.PIXI.{Pixi, Point, RendererOptions}
+import pixiscalajs.extensions.{DefineLoop, Keyboard}
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
@@ -45,31 +45,45 @@ class Valkyrie {
 
 
     PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST
-    val sprite = PIXI.Sprite.fromImage("https://cdn.glitch.com/fb2531f1-6ba2-4512-aa7b-ce93b5f02fe3%2Fwobster.png?1546108981626",true)//.from('assets/image.png');
-    sprite.anchor = PIXI.Point(0.5f,0.5f)
-    sprite.x = 20
-    sprite.y = 20
-    sprite.scale = PIXI.Point(2,2)
 
 
 
-    stage.addChild(sprite)
-    println("d")
 
-    val right = Keyboard.bind(39)
-    val left = Keyboard.bind(37)
-    val up = Keyboard.bind(38)
-    val down = Keyboard.bind(40)
+    //stage.addChild(sprite)
+    println("dddwdwdwddd")
+
+    var player = Player(20f,20f)
+    stage.addChild(player.sprite)
+
+    val right = Keyboard.bind(68)
+    val left = Keyboard.bind(65)
+    val up = Keyboard.bind(87)
+    val down = Keyboard.bind(83)
+
+    var camera = new Point(0f,0f)
+    var scale = new Point(2,2)
+    var center = new Point(renderer.width/2,renderer.height/2)
+
+    var net = new Point(0f,0f)
 
     val loop = DefineLoop{
-      if(right.isDown) sprite.x+=1
-      if(left.isDown) sprite.x-=1
-      if(up.isDown) sprite.y-=1
-      if(down.isDown) sprite.y+=1
+
+      net.x=0
+      net.y=0
+      if(right.isDown) net.x+=1
+      if(left.isDown) net.x-=1
+      if(up.isDown) net.y-=1
+      if(down.isDown) net.y+=1
+      player.x+=net.x.toFloat
+      player.y+=net.y.toFloat
+      //player = Player(player.x+net.x.toFloat,player.y+net.y.toFloat)
+      player.updateSprite(camera,center,scale)
+
 
       renderer.render(stage)
     }
 
+    loop.run()
 
 
 
