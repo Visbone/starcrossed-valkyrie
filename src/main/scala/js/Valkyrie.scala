@@ -53,14 +53,14 @@ class Valkyrie {
 
 
     //stage.addChild(sprite)
-    println("FF")
+    println("JESUS")
     TestWall
     var player = Player(32,32)
     var player2 = Player(32,32*20-32)
 
     var goal = Goal(39,10)
 
-    Entity.entities.map(x=>if(x.visible)stage.addChild(x.sprite))
+    Entity.entities.map(x=>if(x.visible)stage.addChild(x.display))
 
     val right = Keyboard.bind(68)
     val left = Keyboard.bind(65)

@@ -1,6 +1,6 @@
 package shared
 
-import pixiscalajs.PIXI.{Point, Sprite}
+import pixiscalajs.PIXI.{DisplayObject, Point, Sprite}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -9,13 +9,15 @@ trait Entity {
   var x:Float
   var y:Float
   val visible:Boolean
-  val sprite:Sprite
+  val display:DisplayObject
 
   def updateSprite(camera:Point,center:Point,scale:Point) = {
-    sprite.anchor = Entity.anchor
-    sprite.scale = scale
-    sprite.x = (x - camera.x)*scale.x + center.x
-    sprite.y = (y - camera.y)*scale.y + center.y
+
+    display.scale = scale
+    display.pivot.x = Entity.anchor.x * display.getLocalBounds().width  / display.scale.x
+    display.pivot.y = Entity.anchor.y * display.getLocalBounds().height / display.scale.y
+    display.x = (x - camera.x)*scale.x + center.x
+    display.y = (y - camera.y)*scale.y + center.y
   }
   val id = Entity.register(this)
   def removefromPool()={

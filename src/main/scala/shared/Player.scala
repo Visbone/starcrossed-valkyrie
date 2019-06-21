@@ -3,8 +3,28 @@ import pixiscalajs.PIXI
 import pixiscalajs.PIXI.{Point, Sprite}
 
 case class Player(var x:Float,var y:Float) extends Entity{
+  val body = PIXI.Sprite.fromImage("https://cdn.glitch.com/fb2531f1-6ba2-4512-aa7b-ce93b5f02fe3%2Fsurvivor.png?v=1561147595564",true)
+  val fist1= PIXI.Sprite.fromImage("https://cdn.glitch.com/fb2531f1-6ba2-4512-aa7b-ce93b5f02fe3%2Ffist.png?v=1561147933663",true)
+  val fist2= PIXI.Sprite.fromImage("https://cdn.glitch.com/fb2531f1-6ba2-4512-aa7b-ce93b5f02fe3%2Ffist.png?v=1561147933663",true)
+  fist1.y = 13
+  fist2.y = 13
 
-  override val sprite: Sprite = PIXI.Sprite.fromImage("https://cdn.glitch.com/fb2531f1-6ba2-4512-aa7b-ce93b5f02fe3%2Fwobster.png?1546108981626",true)
+  fist1.x = -12
+  fist2.x = 12
+
+  body.x = 0
+  body.y = 0
+  override val display = new PIXI.Container
+  display.addChild(body)
+  display.addChild(fist1)
+  display.addChild(fist2)
+
+  override def updateSprite(camera: Point, center: Point, scale: Point): Unit = {
+    super.updateSprite(camera, center, scale)
+    display.pivot.x=16
+    display.pivot.y=16
+  }
+
   override val visible: Boolean = true
   def testUpdate(net:Point)={
     val player = this
