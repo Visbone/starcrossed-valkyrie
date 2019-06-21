@@ -52,7 +52,7 @@ class Valkyrie {
     //stage.addChild(sprite)
     println("FF")
 
-    var player = Player(20f,20f)
+    var player = Player(-40f,-40f)
 
     for(i <- 0 to 31){
       var wall = TestWall(i,i)
@@ -68,16 +68,49 @@ class Valkyrie {
     var camera = new Point(0f,0f)
     var scale = new Point(2,2)
     var center = new Point(renderer.width/2,renderer.height/2)
+    var net = new Point(0,0)
 
     val loop = DefineLoop{
+      net.x = 0
+      net.y = 0
+      if(right.isDown) net.x+=1
+      if(left.isDown) net.x-=1
+      if(up.isDown) net.y-=1
+      if(down.isDown) net.y+=1
 
-      if(right.isDown) player.x+=1
-      if(left.isDown) player.x-=1
-      if(up.isDown) player.y-=1
-      if(down.isDown) player.y+=1
+
       camera.x=player.x
       camera.y=player.y
       //player = Player(player.x+net.x.toFloat,player.y+net.y.toFloat)
+      player.x+=net.x.toFloat
+      Entity.entities.map(ent => {
+        ent match {
+          case x:TestWall => {
+
+            if(Math.abs(player.x - x.x)<32 && Math.abs(player.y - x.y)<32){
+              player.x-=net.x.toFloat
+            }
+
+          }
+          case _ => {}
+        }
+      })
+
+      player.y+=net.y.toFloat
+      Entity.entities.map(ent => {
+        ent match {
+          case x:TestWall => {
+
+            if(Math.abs(player.x - x.x)<32 && Math.abs(player.y - x.y)<32){
+              player.y-=net.y.toFloat
+            }
+
+          }
+          case _ => {}
+        }
+      })
+
+
       Entity.entities.map(_.updateSprite(camera,center,scale))
 
 
