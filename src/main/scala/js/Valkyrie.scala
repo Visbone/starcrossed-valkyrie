@@ -51,21 +51,19 @@ class Valkyrie {
 
     //stage.addChild(sprite)
     println("FF")
+    TestWall
+    var player = Player(64,64)
 
-    var player = Player(-40f,-40f)
 
-    for(i <- 0 to 31){
-      var wall = TestWall(i,i)
-      stage.addChild(wall.sprite)
-    }
-    stage.addChild(player.sprite)
+
+    Entity.entities.map(x=>if(x.visible)stage.addChild(x.sprite))
 
     val right = Keyboard.bind(68)
     val left = Keyboard.bind(65)
     val up = Keyboard.bind(87)
     val down = Keyboard.bind(83)
 
-    var camera = new Point(0f,0f)
+    var camera = new Point(10*32,5*32)
     var scale = new Point(2,2)
     var center = new Point(renderer.width/2,renderer.height/2)
     var net = new Point(0,0)
@@ -79,8 +77,8 @@ class Valkyrie {
       if(down.isDown) net.y+=1
 
 
-      camera.x=player.x
-      camera.y=player.y
+      //camera.x=player.x
+      //camera.y=player.y
       //player = Player(player.x+net.x.toFloat,player.y+net.y.toFloat)
       player.x+=net.x.toFloat
       Entity.entities.map(ent => {

@@ -19,8 +19,23 @@ case class Space(xx:Int,yy:Int) extends Entity {
 
 object TestWall {
   val Tile = Array.ofDim[Entity](32,32)
-  for(i <- 0 to 32)for(j <- 0 to 32){
-    Tile(i)(j)=Space(i,j)
+  for(i <- 1 to 19)for(j <- 1 to 9){
+
+    if(Math.random()<0.125){
+      Tile(i)(j)=TestWall(i,j)
+    }else{
+      Tile(i)(j)=Space(i,j)
+    }
+
+
+  }
+  for(i <- 0 to 10){
+    TestWall(i,10)
+    TestWall(i,0)
+    TestWall(i+10,10)
+    TestWall(i+10,0)
+    TestWall(20,i)
+    TestWall(0,i)
   }
 
 }
