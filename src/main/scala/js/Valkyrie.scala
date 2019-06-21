@@ -18,24 +18,20 @@ class Valkyrie {
   @JSExport
   def Client(canvas: CANVAS): Unit = {
 
-
-
-    /*
-    var Client = new VORTEX.Client("vortexserver.glitch.me");
+    var Client = new VORTEX.Client("ws://vortexserver.glitch.me");
 
     Client.on("connect", ()=>{
 
-      //println("connected");
-      Client.on("message", (obj:js.Object)=>{
-        //println(JSON.stringify(obj));
+      println("connected");
+      Client.on("message", (data: js.Array[Byte])=>{
+        println(data);
       });
 
       Client.on("close", ()=>{
-        //println("unconnected :(");
+        println("unconnected :(");
       });
 
     });
-    */
 
 
     val renderer = Pixi.autoDetectRenderer(canvas.clientWidth, canvas.clientHeight, RendererOptions(canvas))
