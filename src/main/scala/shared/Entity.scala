@@ -17,12 +17,18 @@ trait Entity {
     sprite.x = (x - camera.x)*scale.x + center.x
     sprite.y = (y - camera.y)*scale.y + center.y
   }
-  Entity.entities.append(this)
+  val id = Entity.register(this)
+  def removefromPool()={
+    //Entity.entities.remove(id) this was a disaster waiting to happen
 
-
+  }
 }
 
 object Entity{
+  def register(e:Entity):Int = {
+    entities.append(e)
+    entities.length-1
+  }
   var entities:ArrayBuffer[Entity] = ArrayBuffer[Entity]()
   private val anchor:Point = new Point(0.5f,0.5f)
 }
