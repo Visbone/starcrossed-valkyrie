@@ -1,7 +1,6 @@
-package shared
+package main.scala
 
 import pixiscalajs.PIXI
-import pixiscalajs.PIXI.Sprite
 
 case class TestWall(xx:Int,yy:Int) extends Entity {
   override var x:Float = xx * 32
@@ -47,7 +46,7 @@ object TestWall {
     if(i>10 && i<=20)if(Math.random()<0.25 )if(!(i==39 && j== 10))if(!(i==1 && j== 19))if(!(i==1 && j== 1)){
       TestWall(i,j)
     }
-    if(i>20)if(Math.random()<0.35 )if(!(i==39 && j== 10))if(!(i==1 && j== 19))if(!(i==1 && j== 1)){
+    if(i>20)if(Math.random()<0.25 )if(!(i==39 && j== 10))if(!(i==1 && j== 19))if(!(i==1 && j== 1)){
       TestWall(i,j)
     }
 

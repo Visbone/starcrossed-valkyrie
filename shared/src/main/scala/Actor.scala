@@ -1,12 +1,14 @@
-package shared
+package main.scala
 
-import scala.collection.mutable.ArrayBuffer
+import java.util.UUID
+import java.util.UUID.randomUUID
+
+import scala.collection.mutable.{ArrayBuffer, HashMap}
 
 
 
 
-
-sealed case class Signature(id:Float)
+sealed case class Signature(id:UUID)
 
 class ActorMessage(sigin:Signature, targetin:Float) {
 
@@ -20,7 +22,7 @@ trait ActorTrait {
 
   //an unchangable id
   private val id = Actor.registerActor(this)
-  final def getID():Float = id
+  final def getID():UUID = id
 
   var MessageStack:ArrayBuffer[ActorMessage] = ArrayBuffer()
 
@@ -37,29 +39,15 @@ trait ActorTrait {
 
 object Actor {
 
-  //private val ActorList: HashMap[Float,Actor] = HashMap.empty[Float,Actor]
-  val ActorList:ArrayBuffer[(Float,ActorTrait)] = ArrayBuffer()
+  val ActorList: HashMap[UUID,ActorTrait] = HashMap.empty[UUID,ActorTrait]
 
-  def checkIDExist(tst:Float):Boolean = {
-    var out = false
-    var i=0
-    while(!out){
-      out=out||tst==ActorList(1)._1
-      i+=1
-    }
-    out
-  }
   //registers an actor and returns its id
-  def registerActor(a:ActorTrait):Float = {
+  def registerActor(a:ActorTrait):UUID = {
     //creates id and hopes it is unique
-    var id = Math.random.toFloat
-
-    /* UNCOMMENT THIS IF YOU ARE PARANOID
-    while(checkIDExist(id)){
-      id = Math.random.toFloat
+    var id = randomUUID()
+    while(ActorList.contains(id)){
+      id = randomUUID()
     }
-    */
-
     //Add Actor and ID to the actor list
     ActorList+=((id,a))
     //Returns the unique id

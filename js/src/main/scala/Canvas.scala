@@ -1,9 +1,9 @@
-package facades.vortex
+package main.scala
 
-import scala.scalajs.js
-import scala.scalajs.js.annotation.JSGlobal
 import org.scalajs.dom
 import org.scalajs.dom.html
+
+import scala.scalajs.js
 
 
 @js.native

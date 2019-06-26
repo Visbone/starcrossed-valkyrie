@@ -1,4 +1,4 @@
-package facades.vortex
+package main.scala
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSGlobal

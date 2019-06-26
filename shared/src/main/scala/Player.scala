@@ -1,6 +1,6 @@
-package shared
+package main.scala
+
 import pixiscalajs.PIXI
-import pixiscalajs.PIXI.{Point, Sprite}
 
 case class Player(var x:Float,var y:Float) extends Entity{
   val body = PIXI.Sprite.fromImage("https://cdn.glitch.com/fb2531f1-6ba2-4512-aa7b-ce93b5f02fe3%2Fsurvivor.png?v=1561147595564",true)
@@ -26,17 +26,24 @@ case class Player(var x:Float,var y:Float) extends Entity{
   }
 
   override val visible: Boolean = true
-  def testUpdate(net:Point)={
+  def testUpdate(net:Point):Int={
     val player = this
     player.x+=net.x.toFloat
+    var out = 0
     Entity.entities.map(ent => {
       ent match {
         case x:TestWall => {
 
-          if(Math.abs(player.x - x.x)<32 && Math.abs(player.y - x.y)<32){
+          if(Math.abs(player.x - x.x)<30 && Math.abs(player.y - x.y)<30){
             player.x-=net.x.toFloat
           }
 
+        }
+        case x:TestMonster => {
+          if(Math.abs(player.x - x.x)<30 && Math.abs(player.y - x.y)<30){
+            out=1
+
+          }
         }
         case _ => {}
       }
@@ -47,14 +54,21 @@ case class Player(var x:Float,var y:Float) extends Entity{
       ent match {
         case x:TestWall => {
 
-          if(Math.abs(player.x - x.x)<32 && Math.abs(player.y - x.y)<32){
+          if(Math.abs(player.x - x.x)<30 && Math.abs(player.y - x.y)<30){
             player.y-=net.y.toFloat
           }
 
         }
+        case x:TestMonster => {
+          if(Math.abs(player.x - x.x)<30 && Math.abs(player.y - x.y)<30){
+            out=1
+
+          }
+        }
         case _ => {}
       }
     })
+    out
   }
 
 }

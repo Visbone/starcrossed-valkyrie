@@ -1,22 +1,24 @@
-package js
+package main.scala
 
-import facades.vortex.{CANVAS, VORTEX}
-import org.scalajs.dom
+//import main.scala.vortex.{CANVAS, VORTEX}
+import java.util.UUID
+
+import org.scalajs.dom.html
 import pixiscalajs.PIXI
 import pixiscalajs.PIXI.{Pixi, Point, RendererOptions}
 import pixiscalajs.extensions.{DefineLoop, Keyboard}
-import shared.TestWall.Tile
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
-import shared._
 
-import scala.collection.mutable.ArrayBuffer
+
 
 @JSExportTopLevel("Valkyrie")
 class Valkyrie {
+
   @JSExport
-  def Client(canvas: CANVAS): Unit = {
+  def Client(canvas: html.Canvas): Unit = {
+
 
     var Client = new VORTEX.Client("ws://vortexserver.glitch.me");
 
@@ -49,14 +51,19 @@ class Valkyrie {
 
 
     //stage.addChild(sprite)
-    println("JESUS")
+    println("BRUNO4")
     TestWall
     var player = Player(32,32)
     var player2 = Player(32,32*20-32)
-
+    var testMonster = TestMonster(32*30,32*10)
     var goal = Goal(39,10)
 
-    Entity.entities.map(x=>if(x.visible)stage.addChild(x.display))
+    //Entity.entities.map(x=>if(x.visible)stage.addChild(x.display))
+    Actor.ActorList.map(
+      x => x match {
+        case (id: UUID, actr: Entity) => if(actr.visible)stage.addChild(actr.display)
+        case _ => {}
+      })
 
     val right = Keyboard.bind(68)
     val left = Keyboard.bind(65)
@@ -88,12 +95,16 @@ class Valkyrie {
       if(left2.isDown) net2.x-=1
       if(up2.isDown) net2.y-=1
       if(down2.isDown) net2.y+=1
-
       //camera.x=player.x
       //camera.y=player.y
       //player = Player(player.x+net.x.toFloat,player.y+net.y.toFloat)
-      player.testUpdate(net)
-      player2.testUpdate(net2)
+      if(player.testUpdate(net)==1){
+        stage.removeChild(player.display)
+      }
+      if(player2.testUpdate(net2)==1){
+        stage.removeChild(player2.display)
+      }
+      testMonster.testUpdate()
       if((Math.abs(player.x-goal.x)<32 && Math.abs(player.y-goal.y)<32)||(Math.abs(player2.x-goal.x)<32 && Math.abs(player2.y-goal.y)<32)){
         player.x=32
         player.y=32
@@ -103,7 +114,11 @@ class Valkyrie {
       }
 
 
-      Entity.entities.map(_.updateSprite(camera,center,scale))
+      Actor.ActorList.map(
+        x => x match {
+          case (id: UUID, actr: Entity) => actr.updateSprite(camera, center, scale)
+          case _ => {}
+        })
 
 
       renderer.render(stage)
