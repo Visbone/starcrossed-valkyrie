@@ -1,6 +1,5 @@
-package main.scala
-
 import pixiscalajs.PIXI
+import pixiscalajs.PIXI.Sprite
 
 case class TestWall(xx:Int,yy:Int) extends Entity {
   override var x:Float = xx * 32

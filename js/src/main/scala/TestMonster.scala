@@ -1,8 +1,10 @@
-package main.scala
+
 
 import java.util.UUID
 
+import main.scala.Actor
 import pixiscalajs.PIXI
+import pixiscalajs.PIXI.{Point, Sprite}
 
 
 

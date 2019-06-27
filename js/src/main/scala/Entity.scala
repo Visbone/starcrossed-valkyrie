@@ -1,13 +1,16 @@
-package main.scala
-
 import java.util.UUID
+
+import main.scala.{Actor, ActorTrait}
+import pixiscalajs.PIXI.{DisplayObject, Point}
+
+import scala.collection.mutable.ArrayBuffer
 
 trait Entity extends ActorTrait{
 
   var x:Float
   var y:Float
   val visible:Boolean
-  /*
+
   val display:DisplayObject
 
   def updateSprite(camera:Point,center:Point,scale:Point) = {
@@ -17,7 +20,7 @@ trait Entity extends ActorTrait{
     display.pivot.y = Entity.anchor.y * display.getLocalBounds().height / display.scale.y
     display.x = (x - camera.x)*scale.x + center.x
     display.y = (y - camera.y)*scale.y + center.y
-  }*/
+  }
 
   def removefromPool()={
     //Entity.entities.remove(id) this was a disaster waiting to happen
@@ -26,7 +29,7 @@ trait Entity extends ActorTrait{
 }
 
 object Entity{
-
+  val anchor = new Point(0.5,0.5)
   object entities{
 
     def map( func:(Entity)=>Unit ) = {

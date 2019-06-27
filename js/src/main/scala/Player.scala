@@ -1,6 +1,6 @@
-package main.scala
-
 import pixiscalajs.PIXI
+import pixiscalajs.PIXI.Point
+
 
 case class Player(var x:Float,var y:Float) extends Entity{
   val body = PIXI.Sprite.fromImage("https://cdn.glitch.com/fb2531f1-6ba2-4512-aa7b-ce93b5f02fe3%2Fsurvivor.png?v=1561147595564",true)

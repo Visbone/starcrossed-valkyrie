@@ -1,8 +1,8 @@
-package main.scala
 
 //import main.scala.vortex.{CANVAS, VORTEX}
 import java.util.UUID
 
+import main.scala.{Actor, VORTEX}
 import org.scalajs.dom.html
 import pixiscalajs.PIXI
 import pixiscalajs.PIXI.{Pixi, Point, RendererOptions}
