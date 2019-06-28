@@ -4,7 +4,7 @@ import pixiscalajs.PIXI.Sprite
 case class TestWall(xx:Int,yy:Int) extends Entity {
   override var x:Float = xx * 32
   override var y:Float = yy * 32
-  override val display: Sprite = PIXI.Sprite.fromImage("https://cdn.glitch.com/fb2531f1-6ba2-4512-aa7b-ce93b5f02fe3%2Fteststone.png?v=1543961365002")
+  override val display: Sprite = PIXI.Sprite.fromImage("assets/testwall.png")
   override val visible: Boolean = true
   TestWall.Tile(xx)(yy).removefromPool()
   TestWall.Tile(xx)(yy)=this
@@ -13,14 +13,14 @@ case class TestWall(xx:Int,yy:Int) extends Entity {
 case class Space(xx:Int,yy:Int) extends Entity {
   override var x:Float = xx * 32
   override var y:Float = yy * 32
-  override val display: Sprite = PIXI.Sprite.fromImage("https://cdn.glitch.com/fb2531f1-6ba2-4512-aa7b-ce93b5f02fe3%2Fteststone.png?v=1543961365002")
+  override val display: Sprite = PIXI.Sprite.fromImage("assets/testwall.png")
   override val visible: Boolean = false
 }
 
 case class Goal(xx:Int,yy:Int) extends Entity {
   override var x:Float = xx * 32
   override var y:Float = yy * 32
-  override val display: Sprite = PIXI.Sprite.fromImage("https://cdn.glitch.com/fb2531f1-6ba2-4512-aa7b-ce93b5f02fe3%2Ftestwood.png?v=1543961365135")
+  override val display: Sprite = PIXI.Sprite.fromImage("assets/goal.png")
 
   override val visible: Boolean = true
 

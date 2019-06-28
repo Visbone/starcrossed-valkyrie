@@ -9,7 +9,7 @@ import pixiscalajs.PIXI.{Point, Sprite}
 
 
 case class TestMonster(var x:Float,var y:Float) extends Entity {
-  override val display: Sprite = PIXI.Sprite.fromImage("https://cdn.glitch.com/fb2531f1-6ba2-4512-aa7b-ce93b5f02fe3%2Fwobster.png?v=1546108981626")
+  override val display: Sprite = PIXI.Sprite.fromImage("assets/wobster.png")
   override val visible: Boolean = true
   var net = new Point()
   def testUpdate()={

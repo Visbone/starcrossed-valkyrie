@@ -18,7 +18,7 @@ class Valkyrie {
 
   @JSExport
   def Client(canvas: html.Canvas): Unit = {
-
+/*
 
     var Client = new VORTEX.Client("ws://vortexserver.glitch.me");
 
@@ -34,7 +34,7 @@ class Valkyrie {
       });
 
     });
-
+*/
 
     val renderer = Pixi.autoDetectRenderer(canvas.clientWidth, canvas.clientHeight, RendererOptions(canvas))
 
@@ -51,7 +51,7 @@ class Valkyrie {
 
 
     //stage.addChild(sprite)
-    println("BRUNO4")
+    println("BRUNO6")
     TestWall
     var player = Player(32,32)
     var player2 = Player(32,32*20-32)
@@ -61,9 +61,11 @@ class Valkyrie {
     //Entity.entities.map(x=>if(x.visible)stage.addChild(x.display))
     Actor.ActorList.map(
       x => x match {
-        case (id: UUID, actr: Entity) => if(actr.visible)stage.addChild(actr.display)
+        case (id: UUID, actr: Entity) => if(actr.visible){stage.addChild(actr.display);}
         case _ => {}
-      })
+      }
+
+    )
 
     val right = Keyboard.bind(68)
     val left = Keyboard.bind(65)
