@@ -12,7 +12,12 @@ lazy val valkyrie =
   crossProject(JSPlatform, JVMPlatform, NativePlatform)
     .crossType(CrossType.Full).in(file(".")) // [Pure, Full, Dummy], default: CrossType.Full
     .settings(sharedSettings)
-    //.jsSettings(/* ... */) // defined in sbt-scalajs-crossproject
+    .jsSettings(
+      libraryDependencies ++= commonDependencies ++ Seq(
+        "org.scala-js" %%% "scalajs-dom" % "0.9.7"
+        ,"io.suzaku" %%% "boopickle" % "1.3.1"
+        ,"com.chuusai" %%% "shapeless" % "2.3.3"
+    )) // defined in sbt-scalajs-crossproject
     //.jvmSettings(/* ... */)
     //.nativeSettings(/* ... */) // defined in sbt-scala-native
 
