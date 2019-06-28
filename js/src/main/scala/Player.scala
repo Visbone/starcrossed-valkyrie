@@ -3,9 +3,10 @@ import pixiscalajs.PIXI.Point
 
 
 case class Player(var x:Float,var y:Float) extends Entity{
-  val body = PIXI.Sprite.fromImage("assets/survivor.png",true)
-  val fist1= PIXI.Sprite.fromImage("assets/fist.png",true)
-  val fist2= PIXI.Sprite.fromImage("assets/fist.png",true)
+  val body = PIXI.Sprite.fromImage("assets/survivor.png")
+  //val body = PIXI.Sprite.fromImage("https://cdn.glitch.com/fb2531f1-6ba2-4512-aa7b-ce93b5f02fe3%2Fsurvivor.png?v=1561147595564",true)
+  val fist1= PIXI.Sprite.fromImage("assets/fist.png")
+  val fist2= PIXI.Sprite.fromImage("assets/fist.png")
   fist1.y = 13
   fist2.y = 13
 

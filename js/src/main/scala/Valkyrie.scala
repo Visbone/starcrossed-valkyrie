@@ -51,7 +51,7 @@ class Valkyrie {
 
 
     //stage.addChild(sprite)
-    println("BRUNO6")
+    println("BRUNO7")
     TestWall
     var player = Player(32,32)
     var player2 = Player(32,32*20-32)
