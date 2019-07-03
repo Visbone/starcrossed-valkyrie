@@ -4,21 +4,26 @@ version := "0.1"
 
 import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
 
-val sharedSettings = Seq(scalaVersion := "2.11.12")
-
-
 lazy val valkyrie =
 // select supported platforms
   crossProject(JSPlatform, JVMPlatform, NativePlatform)
     .crossType(CrossType.Full).in(file(".")) // [Pure, Full, Dummy], default: CrossType.Full
-    .settings(sharedSettings)
+    .settings(Seq(
+      scalaVersion := "2.11.12",
+      libraryDependencies ++= Seq(
+        "io.suzaku" %%% "boopickle" % "1.3.1",
+        "com.chuusai" %%% "shapeless" % "2.3.3"
+      )
+    ))
     .jsSettings(
-      libraryDependencies ++= commonDependencies ++ Seq(
+      libraryDependencies ++= Seq(
         "org.scala-js" %%% "scalajs-dom" % "0.9.7"
-        ,"io.suzaku" %%% "boopickle" % "1.3.1"
-        ,"com.chuusai" %%% "shapeless" % "2.3.3"
     )) // defined in sbt-scalajs-crossproject
-    //.jvmSettings(/* ... */)
+    .jvmSettings(
+      libraryDependencies ++= Seq(
+        "org.java-websocket" % "Java-WebSocket" % "1.4.0"
+      )
+    )
     //.nativeSettings(/* ... */) // defined in sbt-scala-native
 
 // Optional in sbt 1.x (mandatory in sbt 0.13.x)
@@ -86,12 +91,6 @@ lazy val js = project
     shared
   ).enablePlugins(ScalaJSPlugin)
 */
-
-
-  lazy val commonDependencies =  Seq(
-    "io.suzaku" %% "boopickle" % "1.3.1",
-    "com.chuusai" %% "shapeless" % "2.3.3"
-  )
 
 /*
 enablePlugins(ScalaJSPlugin)
