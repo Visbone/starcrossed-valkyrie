@@ -3,6 +3,7 @@ package main.scala
 import java.util.UUID
 import java.util.UUID.randomUUID
 
+
 import scala.collection.mutable.{ArrayBuffer, HashMap}
 
 
@@ -12,11 +13,40 @@ sealed case class Signature(id:UUID)
 
 class ActorMessage(sigin:Signature, targetin:Float) {
 
+
   final val sig = sigin
   final val target = targetin
   def applyTo (actt:ActorTrait) : ArrayBuffer[ActorMessage] = ???
 
 }
+
+trait Sendable {
+  def companion: SendableCompanion = ???
+
+
+}
+
+trait SendableCompanion {
+
+  val ID:Int
+  val toByteBuffer:(Sendable)=>(java.nio.ByteBuffer)
+  val fromByteBuffer:(java.nio.ByteBuffer)=>Sendable
+
+  Sendable.convertByteBuffer(ID) = (( (msg:Sendable) => (ID,toByteBuffer(msg))),(id:Int,buff:java.nio.ByteBuffer) => id match {
+    case ID => fromByteBuffer(buff)
+    case _ => throw new Exception("Sendable ID mismatch, are two sendables using the same ID?")
+  })
+
+}
+
+
+object Sendable {
+
+  var convertByteBuffer:Array[((Sendable)=>(Int,java.nio.ByteBuffer),(Int,java.nio.ByteBuffer)=>Sendable)] = new Array(1024)
+
+}
+
+
 
 trait ActorTrait {
 
@@ -73,5 +103,7 @@ object Actor {
     //The global message stack is cleared
     MessageStack.clear()
   }
+
+
 
 }
