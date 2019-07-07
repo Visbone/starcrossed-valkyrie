@@ -20,31 +20,7 @@ class ActorMessage(sigin:Signature, targetin:Float) {
 
 }
 
-trait Sendable {
-  def companion: SendableCompanion = ???
 
-
-}
-
-trait SendableCompanion {
-
-  val ID:Int
-  val toByteBuffer:(Sendable)=>(java.nio.ByteBuffer)
-  val fromByteBuffer:(java.nio.ByteBuffer)=>Sendable
-
-  Sendable.convertByteBuffer(ID) = (( (msg:Sendable) => (ID,toByteBuffer(msg))),(id:Int,buff:java.nio.ByteBuffer) => id match {
-    case ID => fromByteBuffer(buff)
-    case _ => throw new Exception("Sendable ID mismatch, are two sendables using the same ID?")
-  })
-
-}
-
-
-object Sendable {
-
-  var convertByteBuffer:Array[((Sendable)=>(Int,java.nio.ByteBuffer),(Int,java.nio.ByteBuffer)=>Sendable)] = new Array(1024)
-
-}
 
 
 
