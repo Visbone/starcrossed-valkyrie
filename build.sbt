@@ -8,20 +8,19 @@ import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
 
 lazy val valkyrie =
 // select supported platforms
-  crossProject(JSPlatform, JVMPlatform, NativePlatform)
+  crossProject(JSPlatform, JVMPlatform)
     .crossType(CrossType.Full).in(file(".")) // [Pure, Full, Dummy], default: CrossType.Full
     .settings(Seq(
     scalaVersion := "2.11.12",
     libraryDependencies ++= Seq(
       "io.suzaku" %% "boopickle" % "1.3.1",
-      "org.portable-scala" %% "portable-scala-reflect" % "0.1.0"
+      "org.portable-scala" %%% "portable-scala-reflect" % "0.1.0"
     )
   ))
     .jsSettings(
       libraryDependencies ++= Seq(
         "org.scala-js" %%% "scalajs-dom" % "0.9.7",
-        "io.suzaku" %%% "boopickle" % "1.3.1",
-        "org.portable-scala" %%% "portable-scala-reflect" % "0.1.0"
+        "io.suzaku" %%% "boopickle" % "1.3.1"
 
       )) // defined in sbt-scalajs-crossproject
     .jvmSettings(
@@ -36,4 +35,4 @@ lazy val valkyrie =
 lazy val valkyrieJS     = valkyrie.js.enablePlugins(WorkbenchPlugin)
 
 lazy val valkyrieJVM    = valkyrie.jvm
-lazy val valkyrieNative = valkyrie.native
+//lazy val valkyrieNative = valkyrie.native

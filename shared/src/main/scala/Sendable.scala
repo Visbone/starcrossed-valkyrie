@@ -44,6 +44,7 @@ object ReflectRequest extends SendableCompanion {
 
 case class ReflectCommand(classname:String) extends  Sendable {
   override def companion = ReflectCommand
+
   val clsOpt = Reflect.lookupLoadableModuleClass(classname)
   try {
     val cls = clsOpt.get
