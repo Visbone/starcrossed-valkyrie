@@ -3,6 +3,7 @@ package main.scala
 import java.util.UUID
 import java.util.UUID.randomUUID
 
+
 import scala.collection.mutable.{ArrayBuffer, HashMap}
 
 
@@ -12,11 +13,16 @@ sealed case class Signature(id:UUID)
 
 class ActorMessage(sigin:Signature, targetin:Float) {
 
+
   final val sig = sigin
   final val target = targetin
   def applyTo (actt:ActorTrait) : ArrayBuffer[ActorMessage] = ???
 
 }
+
+
+
+
 
 trait ActorTrait {
 
@@ -73,5 +79,7 @@ object Actor {
     //The global message stack is cleared
     MessageStack.clear()
   }
+
+
 
 }
