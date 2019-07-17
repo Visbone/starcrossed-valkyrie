@@ -14,7 +14,9 @@ lazy val valkyrie =
     scalaVersion := "2.11.12",
     libraryDependencies ++= Seq(
       "io.suzaku" %% "boopickle" % "1.3.1",
-      "org.portable-scala" %%% "portable-scala-reflect" % "0.1.0"
+      "org.portable-scala" %%% "portable-scala-reflect" % "0.1.0",
+      compilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full),
+      "com.thoughtworks.enableIf" %% "enableif" % "latest.release"
     )
   ))
     .jsSettings(
