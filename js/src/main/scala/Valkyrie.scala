@@ -2,6 +2,7 @@
 //import main.scala.vortex.{CANVAS, VORTEX}
 import java.util.UUID
 
+import entity._
 import main.scala.{Actor, VORTEX}
 import org.scalajs.dom.html
 import pixiscalajs.PIXI

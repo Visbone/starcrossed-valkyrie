@@ -1,9 +1,10 @@
+package entity
+
 import java.util.UUID
 
+import com.thoughtworks.enableIf
 import main.scala.{Actor, ActorTrait}
 import pixiscalajs.PIXI.{DisplayObject, Point}
-
-import scala.collection.mutable.ArrayBuffer
 
 trait Entity extends ActorTrait{
 
@@ -11,6 +12,8 @@ trait Entity extends ActorTrait{
   var y:Float
   val visible:Boolean
 
+
+  @enableIf(c => c.compilerSettings.exists(_.matches("""^-Xplugin:.*scalajs-compiler_[0-9\.\-]*\.jar$""")))
   val display:DisplayObject
 
   def updateSprite(camera:Point,center:Point,scale:Point) = {

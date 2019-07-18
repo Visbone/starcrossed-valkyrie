@@ -1,25 +1,14 @@
+package entity
+
+import com.thoughtworks.enableIf
 import pixiscalajs.PIXI
 import pixiscalajs.PIXI.Sprite
-
-case class TestWall(xx:Int,yy:Int) extends Entity {
-  override var x:Float = xx * 32
-  override var y:Float = yy * 32
-  override val display: Sprite = PIXI.Sprite.fromImage("assets/testwall.png")
-  override val visible: Boolean = true
-  TestWall.Tile(xx)(yy).removefromPool()
-  TestWall.Tile(xx)(yy)=this
-}
-
-case class Space(xx:Int,yy:Int) extends Entity {
-  override var x:Float = xx * 32
-  override var y:Float = yy * 32
-  override val display: Sprite = PIXI.Sprite.fromImage("assets/testwall.png")
-  override val visible: Boolean = false
-}
 
 case class Goal(xx:Int,yy:Int) extends Entity {
   override var x:Float = xx * 32
   override var y:Float = yy * 32
+
+  @enableIf(c => c.compilerSettings.exists(_.matches("""^-Xplugin:.*scalajs-compiler_[0-9\.\-]*\.jar$""")))
   override val display: Sprite = PIXI.Sprite.fromImage("assets/goal.png")
 
   override val visible: Boolean = true
@@ -28,6 +17,28 @@ case class Goal(xx:Int,yy:Int) extends Entity {
   TestWall.Tile(xx)(yy)=this
 
 }
+case class TestWall(xx:Int,yy:Int) extends Entity {
+  override var x:Float = xx * 32
+  override var y:Float = yy * 32
+
+  @enableIf(c => c.compilerSettings.exists(_.matches("""^-Xplugin:.*scalajs-compiler_[0-9\.\-]*\.jar$""")))
+  override val display: Sprite = PIXI.Sprite.fromImage("assets/testwall.png")
+
+  override val visible: Boolean = true
+  TestWall.Tile(xx)(yy).removefromPool()
+  TestWall.Tile(xx)(yy)=this
+}
+
+case class Space(xx:Int,yy:Int) extends Entity {
+  override var x:Float = xx * 32
+  override var y:Float = yy * 32
+
+  @enableIf(c => c.compilerSettings.exists(_.matches("""^-Xplugin:.*scalajs-compiler_[0-9\.\-]*\.jar$""")))
+  override val display: Sprite = PIXI.Sprite.fromImage("assets/testwall.png")
+
+  override val visible: Boolean = false
+}
+
 
 object TestWall {
   val Tile = Array.ofDim[Entity](48,48)
