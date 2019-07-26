@@ -1,22 +1,21 @@
 package main.scala
 
-import java.util.UUID
-import java.util.UUID.randomUUID
-
-
-import scala.collection.mutable.{ArrayBuffer, HashMap}
 
 
 
+import scala.collection.mutable.{ArrayBuffer, LongMap}
 
-sealed case class Signature(id:UUID)
+
+
+
+sealed case class Signature(id:Long)
 
 class ActorMessage(sigin:Signature, targetin:Float) {
 
 
   final val sig = sigin
   final val target = targetin
-  def applyTo (actt:ActorTrait) : ArrayBuffer[ActorMessage] = ???
+  def applyTo (actt:Actor) : ArrayBuffer[ActorMessage] = ???
 
 }
 
@@ -24,11 +23,11 @@ class ActorMessage(sigin:Signature, targetin:Float) {
 
 
 
-trait ActorTrait {
+abstract class Actor(id:Long) {
 
-  //an unchangable id
-  private val id = Actor.registerActor(this)
-  final def getID():UUID = id
+
+  final def getID():Long = id
+  ActorSystem.registerActor(this)
 
   var MessageStack:ArrayBuffer[ActorMessage] = ArrayBuffer()
 
@@ -41,24 +40,33 @@ trait ActorTrait {
 
   final def getSignature():Signature = Signature(getID())
 
+
 }
 
-object Actor {
 
-  val ActorList: HashMap[UUID,ActorTrait] = HashMap.empty[UUID,ActorTrait]
+
+object ActorSystem {
+
+  val random = new scala.util.Random
+  val ActorList: LongMap[Actor] = LongMap.empty[Actor]
 
   //registers an actor and returns its id
-  def registerActor(a:ActorTrait):UUID = {
+  def registerActor(a:Actor) = {
+    
+    
+    ActorList+=((a.getID(),a))
+  }
+  
+  def getID:Long = {
     //creates id and hopes it is unique
-    var id = randomUUID()
+    var id = Math.abs(random.nextLong())
     while(ActorList.contains(id)){
-      id = randomUUID()
+      id = Math.abs(random.nextLong())
     }
-    //Add Actor and ID to the actor list
-    ActorList+=((id,a))
     //Returns the unique id
     id
   }
+  
 
   private var MessageStack:ArrayBuffer[ActorMessage] = ArrayBuffer()
 

@@ -3,7 +3,7 @@
 import java.util.UUID
 
 import entity._
-import main.scala.{Actor, VORTEX}
+import main.scala.{ActorSystem, VORTEX}
 import org.scalajs.dom.html
 import pixiscalajs.PIXI
 import pixiscalajs.PIXI.{Pixi, Point, RendererOptions}
@@ -53,16 +53,13 @@ class Valkyrie {
 
     //stage.addChild(sprite)
     println("BRUNO7")
-    TestWall
+
     var player = Player(32,32)
-    var player2 = Player(32,32*20-32)
-    var testMonster = TestMonster(32*30,32*10)
-    var goal = Goal(39,10)
 
     //Entity.entities.map(x=>if(x.visible)stage.addChild(x.display))
-    Actor.ActorList.map(
+    ActorSystem.ActorList.foreach(
       x => x match {
-        case (id: UUID, actr: Entity) => if(actr.visible){stage.addChild(actr.display);}
+        case (id: Long, actr: Entity) => {if(actr.visible){stage.addChild(actr.display);println("isvisible")};println("exists")}
         case _ => {}
       }
 
@@ -73,16 +70,10 @@ class Valkyrie {
     val up = Keyboard.bind(87)
     val down = Keyboard.bind(83)
 
-    val right2 = Keyboard.bind(39)
-    val left2 = Keyboard.bind(37)
-    val up2 = Keyboard.bind(38)
-    val down2 = Keyboard.bind(40)
-
-    var camera = new Point(10*32*2,2*5*32)
-    var scale = new Point(1,1)
+    var camera = new Point(player.x,player.y)//(10*32*2,2*5*32)
+    var scale = new Point(1,1)//(1.0/32.0,1.0/32.0)
     var center = new Point(renderer.width/2,renderer.height/2)
     var net = new Point(0,0)
-    var net2 = new Point(0,0)
 
     val loop = DefineLoop{
       net.x = 0
@@ -92,36 +83,15 @@ class Valkyrie {
       if(up.isDown) net.y-=1
       if(down.isDown) net.y+=1
 
-      net2.x = 0
-      net2.y = 0
-      if(right2.isDown) net2.x+=1
-      if(left2.isDown) net2.x-=1
-      if(up2.isDown) net2.y-=1
-      if(down2.isDown) net2.y+=1
-      //camera.x=player.x
-      //camera.y=player.y
-      //player = Player(player.x+net.x.toFloat,player.y+net.y.toFloat)
-      if(player.testUpdate(net)==1){
-        stage.removeChild(player.display)
-      }
-      if(player2.testUpdate(net2)==1){
-        stage.removeChild(player2.display)
-      }
-      testMonster.testUpdate()
-      if((Math.abs(player.x-goal.x)<32 && Math.abs(player.y-goal.y)<32)||(Math.abs(player2.x-goal.x)<32 && Math.abs(player2.y-goal.y)<32)){
-        player.x=32
-        player.y=32
-        player2.x=32
-        player2.y=32*20-32
+      player.x+=net.x.toFloat
+      player.y+=net.y.toFloat
 
-      }
+      //println(player.x,player.y)
 
+      //println(scale.x,scale.y)
 
-      Actor.ActorList.map(
-        x => x match {
-          case (id: UUID, actr: Entity) => actr.updateSprite(camera, center, scale)
-          case _ => {}
-        })
+      Player.updateSprite(player,camera,center,scale)
+
 
 
       renderer.render(stage)

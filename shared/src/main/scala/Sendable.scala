@@ -45,6 +45,7 @@ object ReflectRequest extends SendableCompanion {
 case class ReflectCommand(classname:String) extends  Sendable {
   override def companion = ReflectCommand
 
+  //TODO MAKE THIS EXTERNALLY DONE, SO NOT TOO SLOW DOWN WHEN SENDINF REFLECTCOMMANDS
   val clsOpt = Reflect.lookupLoadableModuleClass(classname)
   try {
     val cls = clsOpt.get
@@ -56,6 +57,7 @@ case class ReflectCommand(classname:String) extends  Sendable {
   }
 
 }
+
 object ReflectCommand extends SendableCompanion{
   override val ID: Int = 1
   override val toByteBuffer: Sendable => ByteBuffer = (snd:Sendable) => snd match {
